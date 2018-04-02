@@ -2,7 +2,7 @@
 // @name         Blackboard Auto-login
 // @namespace    http://tampermonkey.net/
 // @version      0.1
-// @description  try to take over the world!
+// @description  Automatic login to W&M Blackboard (with CAS)
 // @author       Sacchride
 // @include *
 // @match        http://*
@@ -11,11 +11,15 @@
 // @require https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js
 // ==/UserScript==
 
+// Wait after the page loads
 window.onload = function(e){
+
+    // Try to see if the current URL link is cas.wm.edu/...
     try{
         if (window.location.href.slice(0,37) == "https://cas.wm.edu/cas/login?service="){
                 try{
-                     console.log("Shouldn't happen1");
+
+                    // Try to check this again, this is here for sanity check, could be removed
                     if (window.location.href.slice(0,37) == "https://cas.wm.edu/cas/login?service="){
                         
                         // Edit to your own username
@@ -27,15 +31,16 @@ window.onload = function(e){
                         document.getElementsByClassName("btn btn-submit btn-block")[0].click();
                     }
                     else{
-                        console.log("Shouldn't happen3");
+                        console.log("The current page is not Blackboard Login Page");
                     }
                 }
                 catch(err){
-                    console.log("This current page is not Blackboard Login page.");
+                    console.log("Unable to find some fields, contact me to update.");
                 }
         }
+        console.log("Not W&M Blackboard login page");
     }
     catch(err){
-        console.log("Not Blackboard Login screen!");
+        console.log("Unable to find some fields, contact me to update.");
     }
 };
